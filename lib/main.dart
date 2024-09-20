@@ -1,3 +1,4 @@
+import 'package:advance_fundemental/quiz_app/quiz/screens/quiz_screen.dart';
 import 'package:advance_fundemental/quiz_app/quiz/widgets/question_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
             Text("WElcome to this app yo wiill test and answer"),
             ElevatedButton(
                 onPressed: () {
-                  Get.to(() => QuestionScreen());
+                  Get.to(() => QuizScreen());
                 },
                 child: Text("Continue to Quiz")),
           ]),

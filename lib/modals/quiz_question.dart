@@ -1,13 +1,13 @@
 class QuizQuestion {
   const QuizQuestion(
-      {required this.answer,
+      {required this.answers,
       required this.question,
       this.isAnswered = false,
       required this.correctAnswerIndex});
   final bool isAnswered;
   final String question;
   final int correctAnswerIndex;
-  final List<String> answer;
+  final List<String> answers;
 
   QuizQuestion copyWith(
       {bool? isAnswered,
@@ -15,7 +15,7 @@ class QuizQuestion {
       int? correctAnswerIndex,
       List<String>? answers}) {
     return QuizQuestion(
-        answer: answers ?? answer,
+        answers: answers ?? this.answers,
         question: text ?? this.question,
         correctAnswerIndex: correctAnswerIndex ?? this.correctAnswerIndex,
         isAnswered: isAnswered ?? this.isAnswered);

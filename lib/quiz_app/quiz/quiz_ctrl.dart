@@ -1,4 +1,6 @@
 import 'package:advance_fundemental/modals/quiz_question.dart';
+import 'package:advance_fundemental/quiz_app/quiz/screens/quiz_screen.dart';
+import 'package:advance_fundemental/quiz_app/quiz/screens/result_screen.dart';
 import 'package:get/get.dart';
 
 class QuizController extends GetxController {
@@ -7,7 +9,7 @@ class QuizController extends GetxController {
   var questions = const <QuizQuestion>[
     QuizQuestion(
       question: 'What are the main building block of a flutter Uis?',
-      answer: [
+      answers: [
         'component',
         'Widgets',
         'Blocks',
@@ -17,7 +19,7 @@ class QuizController extends GetxController {
     ),
     QuizQuestion(
       question: 'How Flutter UIs Builts?',
-      answer: [
+      answers: [
         'By combining Widgets in visual editor',
         'By combining Widgets in config files',
         'By combining Widgets in Android Studio in Android ',
@@ -27,7 +29,7 @@ class QuizController extends GetxController {
     ),
     QuizQuestion(
       question: 'What is the purpose of StateFulWidgets ?',
-      answer: [
+      answers: [
         'Update Uis as data Changes',
         'Update data as UIs change',
         'Ignore data Changes',
@@ -38,7 +40,7 @@ class QuizController extends GetxController {
     QuizQuestion(
       question:
           'Which widget should try to use more often : StatelessWidge or StateFulWidgets ?',
-      answer: [
+      answers: [
         'StateFulWidget',
         'Both are equally good',
         'StatelessWidget',
@@ -48,7 +50,7 @@ class QuizController extends GetxController {
     ),
     QuizQuestion(
       question: 'What happen if you change data in a  StatelessWidge ?',
-      answer: [
+      answers: [
         'The UI is not updated',
         'The UI is updated',
         'StatefullWidget is Updated',
@@ -58,7 +60,7 @@ class QuizController extends GetxController {
     ),
     QuizQuestion(
       question: 'How should you update data inside of  StatelessWidge ?',
-      answer: [
+      answers: [
         'By calling Setstate()',
         'By calling Updatedata()',
         'By calling UpdateUI()',
@@ -68,14 +70,34 @@ class QuizController extends GetxController {
     ),
   ].obs;
   Rx<int> currentQuestionIndex = 0.obs;
-  submitAnswer(int questionindex, int submittedAnswerIndex) {
-    questions[questionindex] =
-        questions[questionindex].copyWith(isAnswered: true);
+  submitAnswer(int submittedAnswerIndex) async {
+    questions[currentQuestionIndex.value] =
+        questions[currentQuestionIndex.value].copyWith(
+      isAnswered: true,
+    );
     answers.add(submittedAnswerIndex);
-    if (questions.length < questionindex) {
-      currentQuestionIndex.value = currentQuestionIndex.value++;
+    update();
+
+    if (currentQuestionIndex.value < questions.length - 1) {
+      await Future.delayed(Duration(seconds: 1));
+      currentQuestionIndex.value = currentQuestionIndex.value + 1;
+      update();
     } else {
       // go to result screen
+      Get.to(() => ResultScreen());
+      print("result screen");
     }
+  }
+
+  void clearAllValues() {
+    answers.clear();
+    for (int i = 0; i < questions.length; i++) {
+      questions[i] = questions[i].copyWith(isAnswered: false);
+    }
+
+    currentQuestionIndex.value = 0;
+    update();
+    questions.refresh();
+    answers.refresh();
   }
 }

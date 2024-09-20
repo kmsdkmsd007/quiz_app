@@ -3,12 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class QuestionScreen extends StatefulWidget {
-  QuestionScreen({
+class QuizScreen extends StatefulWidget {
+  QuizScreen({
     super.key,
   });
 
-  var quizCtrl = Get.put(QuizController());
+  @override
+  State<QuizScreen> createState() => _QuizScreenState();
+}
+
+class _QuizScreenState extends State<QuizScreen> {
+  late QuizController quizCtrl;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (Get.isRegistered<QuizController>()) {
+      quizCtrl = Get.find<QuizController>();
+    } else {
+      quizCtrl = Get.put(QuizController());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,30 +31,40 @@ class QuestionScreen extends StatefulWidget {
       body: Obx(() {
         return Container(
           margin: const EdgeInsets.all(50),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                quizCtrl
-                    .questions[quizCtrl.currentQuestionIndex.value].question,
-                style: GoogleFonts.roboto(color: Colors.white, fontSize: 17),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 22,
-              ),
-              ...quizCtrl.answers.map(
-                (answers) {
-                  return AnswerButton(
-                      aswertext: answers,
-                      onTap: () {
-                        anwserQuestion(answers);
-                      });
-                },
-              ),
-            ],
-          ),
+          child: quizCtrl.currentQuestionIndex.value < quizCtrl.questions.length
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      quizCtrl.questions[quizCtrl.currentQuestionIndex.value]
+                          .question,
+                      style: GoogleFonts.roboto(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 22,
+                    ),
+                    ...List.generate(
+                      quizCtrl.questions[quizCtrl.currentQuestionIndex.value]
+                          .answers.length,
+                      (index) {
+                        return ListTile(
+                          title: Text(quizCtrl
+                              .questions[quizCtrl.currentQuestionIndex.value]
+                              .answers[index]),
+                          onTap: () {
+                            quizCtrl.submitAnswer(index);
+                          },
+                        );
+                      },
+                    )
+                  ],
+                )
+              : SizedBox.shrink(),
         );
       }),
     );
