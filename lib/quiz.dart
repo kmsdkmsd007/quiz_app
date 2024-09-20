@@ -1,6 +1,6 @@
 import 'package:advance_fundemental/data/question.dart';
-import 'package:advance_fundemental/question_Screen.dart';
-import 'package:advance_fundemental/result_screen.dart';
+import 'package:advance_fundemental/quiz_app/quiz/widgets/question_widget.dart';
+import 'package:advance_fundemental/quiz_app/quiz/screens/result_screen.dart';
 import 'package:advance_fundemental/start_page.dart';
 import 'package:flutter/material.dart';
 

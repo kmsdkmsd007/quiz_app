@@ -1,30 +1,17 @@
-import 'package:advance_fundemental/data/question.dart';
-import 'package:advance_fundemental/modals/answer_button.dart';
+import 'package:advance_fundemental/quiz_app/quiz/quiz_ctrl.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuestionScreen extends StatefulWidget {
-  const QuestionScreen({super.key, required this.onSelectedAnswer});
-  final void Function(String answer) onSelectedAnswer;
-  @override
-  State<QuestionScreen> createState() {
-    return _QuestionScreen();
-  }
-}
+  QuestionScreen({
+    super.key,
+  });
 
-class _QuestionScreen extends State<QuestionScreen> {
-  var currenQuestionIndwx = 0;
-
-  void anwserQuestion(String onSelectedAnswer) {
-    widget.onSelectedAnswer(onSelectedAnswer);
-    setState(() {
-      currenQuestionIndwx++;
-    });
-  }
+  var quizCtrl = Get.put(QuizController());
 
   @override
   Widget build(BuildContext context) {
-    final currentQuestion = questions[currenQuestionIndwx];
     return SizedBox(
       width: double.infinity,
       child: Container(
