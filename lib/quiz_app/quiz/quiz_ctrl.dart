@@ -1,5 +1,5 @@
 import 'package:advance_fundemental/modals/quiz_question.dart';
-import 'package:advance_fundemental/quiz_app/quiz/screens/quiz_screen.dart';
+
 import 'package:advance_fundemental/quiz_app/quiz/screens/result_screen.dart';
 import 'package:get/get.dart';
 
